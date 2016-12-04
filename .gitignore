@@ -1,2 +1,4 @@
 nimcache
-/dec04-nim/*.exe
+*.exe
+/dec05-typescript/solution.js
+node_modules
