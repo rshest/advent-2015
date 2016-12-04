@@ -1,7 +1,5 @@
 import fs = require('fs');
 
-const file = process.argv[2] || 'input.txt';
-const input = fs.readFileSync(file).toString();
 const len = x => x ? x.length : 0;
 
 function isNice1(s: string) : boolean {
@@ -23,6 +21,9 @@ function countNice(input: string, criteria: (s: string) => boolean) {
     .filter(criteria)
     .length;
 }
+
+const file = process.argv[2] || 'input.txt';
+const input = fs.readFileSync(file).toString();
 
 console.log(`Number of nice strings: ${countNice(input, isNice1)}`);
 console.log(`Number of nice strings: ${countNice(input, isNice2)}`);
