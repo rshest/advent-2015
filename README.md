@@ -32,3 +32,8 @@ The goal is to use a different programming language for every problem:
     ```bash
     $ tsc solution.ts && node solution.js input.txt
 	  ```
+
+6. Julia
+    ```bash
+    $ julia solution.jl input.txt
+	  ```
