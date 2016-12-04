@@ -1,19 +1,18 @@
-parse_idx_pair(str) = map(x -> parse(Int64, x) + 1, split(str, ","))
+parse_coor(str) = 
+  map(x -> parse(Int64, x) + 1, split(str, ","))
 
 @enum OP turn_on=1 turn_off=2 toggle=3
 
 function parse_op(str::String)
     parts = split(str, " ")
     if parts[1] == "turn"
-        x1, y1 = parse_idx_pair(parts[3])
-        x2, y2 = parse_idx_pair(parts[5])
+        cpos = 3
         op = (parts[2] == "on") ? turn_on : turn_off
     else
-        x1, y1 = parse_idx_pair(parts[2])
-        x2, y2 = parse_idx_pair(parts[4])
+        cpos = 2
         op = toggle
     end
-    return (op, (x1, y1), (x2, y2))
+    (op, parse_coor(parts[cpos]), parse_coor(parts[cpos + 2]))
 end
 
 function apply_op1(m::BitArray{2}, str::String)
@@ -23,7 +22,7 @@ function apply_op1(m::BitArray{2}, str::String)
     else
         m[y1:y2, x1:x2] = (op == turn_on)
     end
-    return m
+    m
 end
 
 function apply_op2(m::Array{Float64,2}, str::String)
@@ -33,7 +32,7 @@ function apply_op2(m::Array{Float64,2}, str::String)
     else
         m[y1:y2, x1:x2] += (op == turn_on) ? 1 : -1
     end
-    return max(m, 0)
+    max(m, 0)
 end
 
 # read data
