@@ -6,3 +6,8 @@ x LSHIFT 2 -> f
 y RSHIFT 2 -> g
 NOT x -> h
 NOT y -> i
+d AND e -> k
+f OR g -> m
+h AND i -> p
+p AND m -> s
+s OR k -> a
