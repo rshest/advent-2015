@@ -1,4 +1,5 @@
 open System
+open System.Collections.Generic
 
 type Arg =
   | Const of uint16
@@ -13,8 +14,9 @@ type Op =
   | Not of Arg
   | Error
 
-type OpDict = Collections.Generic.IDictionary<string, Op>
-type ValDict = Collections.Generic.Dictionary<string, uint16 option>
+type OpDict = IDictionary<string, Op>
+type ValDict = Dictionary<string, uint16 option>
+
 let toArg (str: string): Arg = 
   let mutable n:uint16 = 0us
   if System.UInt16.TryParse(str, &n) then Const(n)
@@ -35,11 +37,15 @@ let parseCommand (cmd: string): string * Op =
         | _         -> Error
     (parts.[4], op)
 
+// read input data
 let argv = Environment.GetCommandLineArgs()
 let fname = if argv.Length > 2 then argv.[2] else "input.txt"
 let input = IO.File.ReadLines(fname)
 
+//  create operations dictionary (keyed by wire name)
 let ops = input |> Seq.map parseCommand |> dict
+
+//  value dictionary/cache
 let vals = new ValDict()
 for key in ops.Keys do
   vals.Add(key, None)
@@ -68,6 +74,7 @@ and getArg arg =
 let sigA1 = getValue "a" 
 printfn "First value of 'a': %d" sigA1
 
+//  reset value dictionary, except of "b" signal
 for key in ops.Keys do
   vals.[key] <- if key = "b" then Some sigA1 else None
 
