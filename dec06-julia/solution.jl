@@ -3,7 +3,7 @@ parse_coor(str) =
 
 @enum OP turn_on=1 turn_off=2 toggle=3
 
-function parse_op(str::String)
+function parse_op(str::AbstractString)
     parts = split(str, " ")
     if parts[1] == "turn"
         cpos = 3
@@ -15,7 +15,7 @@ function parse_op(str::String)
     (op, parse_coor(parts[cpos]), parse_coor(parts[cpos + 2]))
 end
 
-function apply_op1(m::BitArray{2}, str::String)
+function apply_op1(m::BitArray{2}, str::AbstractString)
     op, (x1, y1), (x2, y2) = parse_op(str)
     if op == toggle
         m[y1:y2, x1:x2] $= true
@@ -25,7 +25,7 @@ function apply_op1(m::BitArray{2}, str::String)
     m
 end
 
-function apply_op2(m::Array{Float64,2}, str::String)
+function apply_op2(m::Array{Float64,2}, str::AbstractString)
     op, (x1, y1), (x2, y2) = parse_op(str)
     if op == toggle
         m[y1:y2, x1:x2] += 2

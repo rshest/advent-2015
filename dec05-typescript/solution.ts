@@ -1,4 +1,4 @@
-import fs = require('fs');
+import * as fs from 'fs';
 
 const len = x => x ? x.length : 0;
 

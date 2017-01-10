@@ -39,7 +39,8 @@ let parseCommand (cmd: string): string * Op =
 
 // read input data
 let argv = Environment.GetCommandLineArgs()
-let fname = if argv.Length > 2 then argv.[2] else "input.txt"
+
+let fname = if argv.Length > 3 then argv.[3] else "input.txt"
 let input = IO.File.ReadLines(fname)
 
 //  create operations dictionary (keyed by wire name)
